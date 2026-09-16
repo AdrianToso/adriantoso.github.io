@@ -1,0 +1,19 @@
+# Verifica que las copias para cada agente coincidan con ai-specs/ y docs/base-standards.md.
+name: Verificar harness
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  sync-check:
+    name: Copias sincronizadas
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Comparar copias con las fuentes
+        run: node ai-specs/scripts/sync-agent-files.mjs --check

@@ -1,0 +1,33 @@
+---
+description: Indica a todos los agentes que usen las reglas consolidadas de docs/base-standards.md
+globs:
+alwaysApply: true
+---
+
+# Usar las reglas base del proyecto
+
+Todos los agentes que trabajen en este proyecto deben seguir las reglas definidas en:
+
+**📋 [docs/base-standards.md](../../docs/base-standards.md)**
+
+## Directiva
+
+- **Fuente única de verdad**: las reglas de desarrollo, contenido, idioma, verificación y publicación están en `docs/base-standards.md` y en los estándares que enlaza.
+- **Sin duplicar reglas**: no sigas otros archivos de reglas que la contradigan. `CLAUDE.md`, `AGENTS.md`, `GEMINI.md` y `codex.md` son copias generadas del mismo archivo.
+- **Siempre vigente**: `docs/base-standards.md` es la versión mantenida.
+
+## Qué incluye
+
+- Contexto del proyecto (portafolio estático en GitHub Pages).
+- Principios: tareas pequeñas, verificar primero, mejora progresiva, accesibilidad, privacidad y contenido verídico.
+- Idioma: documentación y commits en español, contenido con voseo e identificadores en inglés.
+- Enlaces a `docs/frontend-standards.md`, `docs/content-model.md`, `docs/documentation-standards.md`, `docs/development_guide.md` y `docs/openspec-tasks-mandatory-steps.md`.
+- Harness: `ai-specs/` es la fuente y las copias se generan con `node ai-specs/scripts/sync-agent-files.mjs`.
+
+## Cumplimiento
+
+Antes de empezar a trabajar:
+
+1. Leé y aplicá `docs/base-standards.md`.
+2. Leé los estándares específicos que correspondan a la tarea.
+3. Verificá los cambios según `docs/development_guide.md`.

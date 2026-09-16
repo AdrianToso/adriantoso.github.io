@@ -4,3 +4,15 @@ Thumbs.db
 .idea/
 node_modules/
 *.log
+
+# Sitio armado por scripts/package-site.mjs
+_site/
+
+# Harness de IA: archivos locales
+.worktrees/
+.claude/settings.local.json
+
+# Worktrees de Claude Code y notas locales de subagentes
+.claude/worktrees/
+.claude/doc/
+.claude/sessions/

@@ -1,0 +1,4 @@
+{
+  "comment": "Skills y agentes que viven solo en .claude/ o .cursor/, sin fuente en ai-specs/. Formato: \"ruta\": \"motivo\". Ver docs/base-standards.md §6.",
+  "entries": {}
+}
