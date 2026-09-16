@@ -1,0 +1,40 @@
+schema: spec-driven
+
+# Contexto del proyecto: se muestra al agente al crear cada artefacto.
+context: |
+  Proyecto: portafolio profesional de Adrián Toso (desarrollador fullstack .NET), publicado en https://adriantoso.github.io/ con GitHub Pages.
+  Stack: sitio estático con HTML5 semántico (index.html), CSS3 con custom properties (styles.css) y JavaScript sin librerías (script.js).
+  No hay compilación, dependencias, backend, base de datos, API, formularios, cookies ni analítica.
+  Publicación: .github/workflows/pages.yml ejecuta scripts/package-site.mjs, que copia a _site/ solo una lista explícita de archivos.
+  Idioma: artefactos, documentación y commits en español. Contenido del sitio en español rioplatense con voseo. Identificadores de código en inglés.
+
+  Specs del proyecto (fuente única de verdad). Leelas y aplicalas al crear artefactos o implementar:
+  - docs/base-standards.md: principios, idioma, harness, publicación y datos personales.
+  - docs/frontend-standards.md: HTML, CSS, JavaScript, accesibilidad, rendimiento, privacidad y Git.
+  - docs/content-model.md: secciones, anclas, tarjetas, categorías de certificados y reglas editoriales.
+  - docs/documentation-standards.md: qué documentación actualizar según el cambio.
+  - docs/development_guide.md: previsualización, verificación y publicación.
+  - docs/openspec-tasks-mandatory-steps.md: pasos obligatorios de tasks.md.
+  Agentes: para planificar el diseño podés invocar el subagente frontend-developer (ai-specs/agents/frontend-developer.md), que deja su plan en openspec/changes/<cambio>/frontend-plan.md y no implementa.
+  La implementación y la verificación las hace el agente principal, que sigue ese plan, los "Principios que aplicás" del agente y docs/frontend-standards.md.
+  Usá ai-specs/skills/ como guía de flujo cuando corresponda.
+
+rules:
+  proposal:
+    - Antes de escribir, leé docs/base-standards.md y docs/content-model.md.
+    - Incluí una sección "Fuera de alcance".
+    - Si el cambio agrega o modifica datos profesionales (experiencia, proyectos, certificados), indicá la fuente de cada dato. No inventes métricas, fechas ni enlaces.
+    - Indicá si el cambio agrega archivos que el sitio necesita, porque requieren actualizar SITE_FILES en scripts/package-site.mjs.
+  specs:
+    - Escribí los escenarios en términos observables en el navegador (qué ve o puede hacer el visitante).
+    - Incluí escenarios sin JavaScript y con teclado cuando el cambio afecte la interacción.
+    - Respetá las invariantes de docs/content-model.md (categorías, contador de certificados, anclas).
+  design:
+    - Seguí docs/frontend-standards.md (tokens, breakpoints, mejora progresiva, ARIA).
+    - Justificá cualquier dependencia, recurso externo o paso de compilación nuevo. Por defecto, no se permiten.
+    - Describí el impacto en impresión, movimiento reducido, zoom del 200% y los anchos de 320 a 1920 px.
+    - Si hay ajustes responsive, indicá qué media query gana en cada ancho (el bloque posterior de styles.css pisa al anterior).
+  tasks:
+    - Seguí docs/openspec-tasks-mandatory-steps.md. El paso 0 es crear la rama feature/<cambio>.
+    - Terminá con los pasos obligatorios de verificación local, accesibilidad, publicación y documentación, que ejecuta el agente. Si el cambio solo toca documentación o ai-specs/, alcanza con publicación y documentación, justificándolo en tasks.md.
+    - Guardá los reportes en openspec/changes/<cambio>/reports/ con la plantilla de docs/openspec-tasks-mandatory-steps.md.
