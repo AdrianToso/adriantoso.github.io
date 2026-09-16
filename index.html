@@ -13,6 +13,7 @@
   <link rel="canonical" href="https://adriantoso.github.io/">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
   <title>Adrián Toso · Desarrollador Fullstack .NET</title>
 </head>
 <body>
@@ -25,6 +26,7 @@
         <a href="#proyectos">Proyectos</a>
         <a href="#tecnologias">Tecnologías</a>
         <a href="#formacion">Formación</a>
+        <a href="#certificados">Certificados</a>
         <a class="nav-contact" href="#contacto">Hablemos <span aria-hidden="true">↗</span></a>
       </nav>
     </div>
@@ -37,8 +39,9 @@
         <p class="hero-description">Desarrollo software empresarial con .NET y Angular. Transformo sistemas existentes y construyo soluciones con una arquitectura pensada para evolucionar.</p>
         <div class="hero-actions">
           <a class="button button-primary" href="#proyectos">Explorar proyectos <span aria-hidden="true">↗</span></a>
-          <a class="text-link" href="#experiencia">Mi trayectoria <span aria-hidden="true">↓</span></a>
+          <a class="button button-secondary" href="downloads/Adrian-Toso-CV.pdf" download="Adrian-Toso-CV.pdf">Descargar CV <span class="sr-only">profesional en PDF</span><span aria-hidden="true">↓</span></a>
         </div>
+        <div class="hero-resources"><a class="text-link" href="#certificados">Ver certificados <span aria-hidden="true">↗</span></a><span>CV en PDF · 2 páginas</span></div>
         <div class="hero-note"><span class="note-symbol" aria-hidden="true">+</span><p><strong>Más de 10 años</strong> desarrollando soluciones<br>con tecnologías Microsoft.</p></div>
       </div>
       <div class="architecture" role="img" aria-label="Mi enfoque fullstack: interfaces Angular, servicios y APIs .NET, y datos en SQL Server, Oracle y MySQL; unidos por Clean Architecture.">
@@ -98,11 +101,11 @@
       <div class="projects-grid">
         <article class="project-card">
           <div class="project-visual catalog-visual" aria-hidden="true"><div class="visual-topline"><span>01 / FULLSTACK</span><span>PRODUCT CATALOG</span></div><div class="catalog-diagram"><div class="diagram-node"><span>UI</span><strong>Angular</strong></div><span class="diagram-arrow">↔</span><div class="diagram-node"><span>API</span><strong>.NET</strong></div><span class="diagram-arrow">↔</span><div class="diagram-node"><span>DATA</span><strong>SQL</strong></div></div><div class="visual-caption">INTERFAZ · SERVICIOS · PERSISTENCIA</div></div>
-          <div class="project-body"><p class="project-category">CATÁLOGO DE PRODUCTOS</p><h3>ProductCatalog</h3><p>Proyecto fullstack para gestionar productos y categorías. Separa la interfaz Angular de una API .NET organizada con Clean Architecture y CQRS.</p><div class="tags"><span>.NET 8</span><span>Angular 19</span><span>EF Core</span><span>SQL Server</span></div><a class="project-link" href="https://github.com/AdrianToso/ProductCatalog" target="_blank" rel="noopener noreferrer">Explorar código <span class="sr-only">de ProductCatalog en GitHub (abre otra pestaña)</span><span aria-hidden="true">↗</span></a></div>
+          <div class="project-body"><p class="project-category">CATÁLOGO DE PRODUCTOS</p><h3>ProductCatalog</h3><p>Proyecto fullstack para gestionar productos y categorías. Separa la interfaz Angular de una API .NET organizada con Clean Architecture y CQRS.</p><div class="tags"><span>.NET 8</span><span>Angular 19</span><span>EF Core</span><span>SQL Server</span></div><details class="project-details"><summary>Qué podés encontrar</summary><ul><li>Separación entre frontend Angular y API .NET.</li><li>Capas de aplicación, dominio e infraestructura.</li><li>Persistencia con Entity Framework Core y SQL Server.</li></ul></details><a class="project-link" href="https://github.com/AdrianToso/ProductCatalog" target="_blank" rel="noopener noreferrer">Explorar código <span class="sr-only">de ProductCatalog en GitHub (abre otra pestaña)</span><span aria-hidden="true">↗</span></a></div>
         </article>
         <article class="project-card">
           <div class="project-visual ticket-visual" aria-hidden="true"><div class="visual-topline"><span>02 / MICROSERVICIOS</span><span>TICKET MANAGER</span></div><div class="ticket-diagram"><div class="ticket-node"><span>01</span><strong>Tickets</strong></div><div class="event-bridge"><span>EVENTO</span><i></i><small>RabbitMQ</small></div><div class="ticket-node"><span>02</span><strong>Notificaciones</strong></div></div><div class="visual-caption">SERVICIOS DESACOPLADOS · COMUNICACIÓN ASÍNCRONA</div></div>
-          <div class="project-body"><p class="project-category">GESTIÓN DE TICKETS</p><h3>TicketManager</h3><p>Laboratorio práctico de gestión de tickets con API REST y un servicio de notificaciones. Usa eventos para conectar servicios y Docker Compose para el entorno local.</p><div class="tags"><span>.NET 9</span><span>RabbitMQ</span><span>MassTransit</span><span>Docker</span></div><a class="project-link" href="https://github.com/AdrianToso/ADR_T.TicketManager" target="_blank" rel="noopener noreferrer">Explorar código <span class="sr-only">de TicketManager en GitHub (abre otra pestaña)</span><span aria-hidden="true">↗</span></a></div>
+          <div class="project-body"><p class="project-category">GESTIÓN DE TICKETS</p><h3>TicketManager</h3><p>Laboratorio práctico de gestión de tickets con API REST y un servicio de notificaciones. Usa eventos para conectar servicios y Docker Compose para el entorno local.</p><div class="tags"><span>.NET 9</span><span>RabbitMQ</span><span>MassTransit</span><span>Docker</span></div><details class="project-details"><summary>Qué podés encontrar</summary><ul><li>API para el ciclo de vida de tickets.</li><li>Servicio de notificaciones con RabbitMQ y MassTransit.</li><li>Entorno local con Docker Compose y pruebas automatizadas.</li></ul></details><a class="project-link" href="https://github.com/AdrianToso/ADR_T.TicketManager" target="_blank" rel="noopener noreferrer">Explorar código <span class="sr-only">de TicketManager en GitHub (abre otra pestaña)</span><span aria-hidden="true">↗</span></a></div>
         </article>
       </div>
       <div class="projects-footer"><span>Más código, ideas y proyectos en mi perfil.</span><a class="text-link" href="https://github.com/AdrianToso" target="_blank" rel="noopener noreferrer">Ver GitHub <span class="sr-only">(abre otra pestaña)</span><span aria-hidden="true">↗</span></a></div>
@@ -125,7 +128,77 @@
       <div class="education-content"><article class="degree"><span class="education-label">FORMACIÓN ACADÉMICA / 2007–2009</span><h3>Desarrollador de Aplicaciones .NET</h3><p>Universitario Autónomo del Sur · Uruguay</p></article><h3 class="courses-heading">Cursos y formación complementaria</h3><ul class="courses"><li><strong>Angular 19</strong><span>Actualización 2025</span></li><li><strong>Arquitectura de microservicios</strong><span>.NET 8 + gRPC</span></li><li><strong>Docker y Clean Architecture</strong><span>Udemy</span></li><li><strong>Desarrollo seguro y OWASP Top 10</strong><span>NEORIS · SSDLC y estándares de seguridad</span></li><li><strong>Java Web J2EE</strong><span>LATU · Uruguay</span></li><li><strong>Scrum Fundamentals</strong><span>SCRUMstudy</span></li></ul></div>
     </div></section>
 
-    <section class="contact-section" id="contacto" aria-labelledby="contact-title"><div class="container contact-inner"><div><p class="eyebrow">05 / SIGUIENTE CONVERSACIÓN</p><h2 id="contact-title">¿Construimos<br>algo juntos?</h2><p>Si buscás experiencia en .NET, desarrollo fullstack<br class="desktop-break"> o modernización de sistemas, hablemos.</p></div><div class="contact-links"><a class="email-link" href="mailto:adrtoso@gmail.com"><span><small>ESCRIBIME</small>adrtoso@gmail.com</span><span aria-hidden="true">↗</span></a><a class="github-contact" href="https://github.com/AdrianToso" target="_blank" rel="noopener noreferrer">GitHub / AdrianToso <span class="sr-only">(abre otra pestaña)</span><span aria-hidden="true">↗</span></a></div></div></section>
+    <section class="certificates-section" id="certificados" aria-labelledby="certificates-title"><div class="section container">
+      <div class="section-heading"><div><p class="eyebrow">05 / CERTIFICADOS</p><h2 id="certificates-title">Formación que podés<br>comprobar.</h2></div><p>Explorá mis cursos y certificaciones. Cada enlace abre el comprobante con mi nombre, la formación y su fecha.</p></div>
+      <div class="certificate-tools" hidden><div class="certificate-filters" role="group" aria-label="Filtrar certificados por tema"><button type="button" data-filter="todos" aria-pressed="true" aria-controls="certificate-grid">Todos</button><button type="button" data-filter="desarrollo" aria-pressed="false" aria-controls="certificate-grid">Desarrollo</button><button type="button" data-filter="arquitectura" aria-pressed="false" aria-controls="certificate-grid">Arquitectura</button><button type="button" data-filter="ia" aria-pressed="false" aria-controls="certificate-grid">IA</button><button type="button" data-filter="calidad" aria-pressed="false" aria-controls="certificate-grid">Seguridad y calidad</button><button type="button" data-filter="agilidad" aria-pressed="false" aria-controls="certificate-grid">Agilidad</button></div><p class="certificate-count" role="status" aria-live="polite" aria-atomic="true">12 certificados</p></div>
+      <div class="certificates-grid" id="certificate-grid">
+        <article class="certificate-card" data-category="desarrollo">
+          <div class="certificate-meta"><span class="issuer-icon issuer-udemy" aria-hidden="true">U</span><span>Udemy</span><time datetime="2025-05-25">25 may. 2025</time></div>
+          <h3>Angular: de cero a experto</h3><p>Edición 2025</p>
+          <a class="certificate-link" href="https://drive.google.com/file/d/12keJk7LEowcy3TImAOn1qZASR2xNQT4M/view" target="_blank" rel="noopener noreferrer">Ver certificado <span class="sr-only">de Angular: de cero a experto en Google Drive (abre otra pestaña)</span><span aria-hidden="true">↗</span></a>
+        </article>
+        <article class="certificate-card" data-category="arquitectura">
+          <div class="certificate-meta"><span class="issuer-icon issuer-udemy" aria-hidden="true">U</span><span>Udemy</span><time datetime="2025-05-12">12 may. 2025</time></div>
+          <h3>Arquitectura de microservicios</h3><p>.NET 8 y framework gRPC</p>
+          <a class="certificate-link" href="https://drive.google.com/file/d/1HumUzhaazooZ2TGaAaIfRuqqlDSUOfWS/view" target="_blank" rel="noopener noreferrer">Ver certificado <span class="sr-only">de Arquitectura de microservicios en Google Drive (abre otra pestaña)</span><span aria-hidden="true">↗</span></a>
+        </article>
+        <article class="certificate-card" data-category="arquitectura">
+          <div class="certificate-meta"><span class="issuer-icon issuer-udemy" aria-hidden="true">U</span><span>Udemy</span><time datetime="2025-05-15">15 may. 2025</time></div>
+          <h3>Clean Architecture en C# .NET</h3><p>Un curso basado en conceptos</p>
+          <a class="certificate-link" href="https://drive.google.com/file/d/1nJMl8ASfdc7ZQV8FxeOG6yc2FuWfbNBC/view" target="_blank" rel="noopener noreferrer">Ver certificado <span class="sr-only">de Clean Architecture en C# .NET en Google Drive (abre otra pestaña)</span><span aria-hidden="true">↗</span></a>
+        </article>
+        <article class="certificate-card" data-category="desarrollo">
+          <div class="certificate-meta"><span class="issuer-icon issuer-udemy" aria-hidden="true">U</span><span>Udemy</span><time datetime="2025-05-21">21 may. 2025</time></div>
+          <h3>Docker</h3><p>Guía práctica de uso para desarrolladores</p>
+          <a class="certificate-link" href="https://drive.google.com/file/d/1MGAcQo1lduqLWTfpflYIXXgyYp4yfNvx/view" target="_blank" rel="noopener noreferrer">Ver certificado <span class="sr-only">de Docker en Google Drive (abre otra pestaña)</span><span aria-hidden="true">↗</span></a>
+        </article>
+        <article class="certificate-card" data-category="arquitectura">
+          <div class="certificate-meta"><span class="issuer-icon issuer-udemy" aria-hidden="true">U</span><span>Udemy</span><time datetime="2025-04-01">1 abr. 2025</time></div>
+          <h3>Arquitectura de software moderna</h3><p>DDD, eventos y microservicios</p>
+          <a class="certificate-link" href="https://drive.google.com/file/d/1pchEs2_gXqrlnuVGJzKQT1j9fVcrcvUz/view" target="_blank" rel="noopener noreferrer">Ver certificado <span class="sr-only">de Arquitectura de software moderna en Google Drive (abre otra pestaña)</span><span aria-hidden="true">↗</span></a>
+        </article>
+        <article class="certificate-card" data-category="ia">
+          <div class="certificate-meta"><span class="issuer-icon issuer-udemy" aria-hidden="true">U</span><span>Udemy</span><time datetime="2025-05-07">7 may. 2025</time></div>
+          <h3>GitHub Copilot</h3><p>Haz que la IA programe por ti</p>
+          <a class="certificate-link" href="https://drive.google.com/file/d/1v7mY9MuMU6ltxC0DQgrndA9OUKSYUnvA/view" target="_blank" rel="noopener noreferrer">Ver certificado <span class="sr-only">de GitHub Copilot en Google Drive (abre otra pestaña)</span><span aria-hidden="true">↗</span></a>
+        </article>
+        <article class="certificate-card" data-category="ia">
+          <div class="certificate-meta"><span class="issuer-icon issuer-neoris" aria-hidden="true">N</span><span>NEORIS</span><time datetime="2024-06-03">3 jun. 2024</time></div>
+          <h3>Prompt engineering</h3><p>Gemini AI y ChatGPT</p>
+          <a class="certificate-link" href="https://drive.google.com/file/d/18Y7fvm0T6K01STx12Q5Mpf-ekKGBqXm9/view" target="_blank" rel="noopener noreferrer">Ver certificado <span class="sr-only">de Prompt engineering en Google Drive (abre otra pestaña)</span><span aria-hidden="true">↗</span></a>
+        </article>
+        <article class="certificate-card" data-category="calidad">
+          <div class="certificate-meta"><span class="issuer-icon issuer-neoris" aria-hidden="true">N</span><span>NEORIS</span><time datetime="2024-06-24">24 jun. 2024</time></div>
+          <h3>Proceso de desarrollo seguro</h3><p>NEORIS SSDLC</p>
+          <a class="certificate-link" href="https://drive.google.com/file/d/1yxMIaTHkvXN40cIjeXQ2fNuz6ld9JEKp/view" target="_blank" rel="noopener noreferrer">Ver certificado <span class="sr-only">de Proceso de desarrollo seguro en Google Drive (abre otra pestaña)</span><span aria-hidden="true">↗</span></a>
+        </article>
+        <article class="certificate-card" data-category="calidad">
+          <div class="certificate-meta"><span class="issuer-icon issuer-neoris" aria-hidden="true">N</span><span>NEORIS</span><time datetime="2024-06-24">24 jun. 2024</time></div>
+          <h3>OWASP Top 10</h3><p>Contenido de la edición 2021</p>
+          <a class="certificate-link" href="https://drive.google.com/file/d/13_WDz3Zvy3ZpGRi-KnnNp3L9QCB6z3hr/view" target="_blank" rel="noopener noreferrer">Ver certificado <span class="sr-only">de OWASP Top 10 en Google Drive (abre otra pestaña)</span><span aria-hidden="true">↗</span></a>
+        </article>
+        <article class="certificate-card" data-category="calidad">
+          <div class="certificate-meta"><span class="issuer-icon issuer-neoris" aria-hidden="true">N</span><span>NEORIS</span><time datetime="2025-05-23">23 may. 2025</time></div>
+          <h3>Pruebas unitarias</h3><p>Formación NEORIS</p>
+          <a class="certificate-link" href="https://drive.google.com/file/d/1cy_wCdVYyWv7QEPWa4HnCZlDcX6bkBK7/view" target="_blank" rel="noopener noreferrer">Ver certificado <span class="sr-only">de Pruebas unitarias en Google Drive (abre otra pestaña)</span><span aria-hidden="true">↗</span></a>
+        </article>
+        <article class="certificate-card" data-category="agilidad">
+          <div class="certificate-meta"><span class="issuer-icon issuer-neoris" aria-hidden="true">N</span><span>NEORIS</span><time datetime="2024-04-23">23 abr. 2024</time></div>
+          <h3>Metodología de desarrollo</h3><p>Proyectos de software</p>
+          <a class="certificate-link" href="https://drive.google.com/file/d/1VWbBEx6gW4RQ9OHpuEyO08PJAtdljZYI/view" target="_blank" rel="noopener noreferrer">Ver certificado <span class="sr-only">de Metodología de desarrollo en Google Drive (abre otra pestaña)</span><span aria-hidden="true">↗</span></a>
+        </article>
+        <article class="certificate-card" data-category="agilidad">
+          <div class="certificate-meta"><span class="issuer-icon issuer-scrumstudy" aria-hidden="true">S</span><span>SCRUMstudy</span><time datetime="2024-07-04">4 jul. 2024</time></div>
+          <h3>Scrum Fundamentals Certified</h3><p>Credencial 1039383</p>
+          <a class="certificate-link" href="https://drive.google.com/file/d/1YvE1rSVj86I8gjfWOEK7nEyqtzGOTMBf/view" target="_blank" rel="noopener noreferrer">Ver certificado <span class="sr-only">de Scrum Fundamentals Certified en Google Drive (abre otra pestaña)</span><span aria-hidden="true">↗</span></a>
+        </article>
+      </div>
+      <div class="projects-footer"><span>Comprobantes disponibles en Google Drive.</span><a class="text-link" href="https://drive.google.com/drive/folders/1xn7GP5djhjzQ8TOjnQMqu9ffyHEJ3sHM" target="_blank" rel="noopener noreferrer">Ver carpeta completa <span class="sr-only">de certificados (abre otra pestaña)</span><span aria-hidden="true">↗</span></a></div>
+    </div></section>
+
+    <section class="cv-section container" aria-labelledby="cv-title"><div><p class="eyebrow">MI PERFIL, A MANO</p><h2 id="cv-title">Llevate mi experiencia.</h2><p>Mi trayectoria, tecnologías y formación en un PDF de dos páginas.</p></div><div class="cv-actions"><a class="button button-primary" href="downloads/Adrian-Toso-CV.pdf" download="Adrian-Toso-CV.pdf">Descargar CV <span class="sr-only">profesional en PDF</span><span aria-hidden="true">↓</span></a><a class="text-link" href="downloads/Adrian-Toso-CV.pdf" target="_blank" rel="noopener noreferrer">Abrir PDF <span class="sr-only">del CV (abre otra pestaña)</span><span aria-hidden="true">↗</span></a></div></section>
+
+    <section class="contact-section" id="contacto" aria-labelledby="contact-title"><div class="container contact-inner"><div><p class="eyebrow">06 / SIGUIENTE CONVERSACIÓN</p><h2 id="contact-title">¿Construimos<br>algo juntos?</h2><p>Si buscás experiencia en .NET, desarrollo fullstack<br class="desktop-break"> o modernización de sistemas, hablemos.</p></div><div class="contact-links"><a class="email-link" href="mailto:adrtoso@gmail.com"><span><small>ESCRIBIME</small>adrtoso@gmail.com</span><span aria-hidden="true">↗</span></a><a class="github-contact" href="https://github.com/AdrianToso" target="_blank" rel="noopener noreferrer">GitHub / AdrianToso <span class="sr-only">(abre otra pestaña)</span><span aria-hidden="true">↗</span></a></div></div></section>
   </main>
   <footer class="site-footer container"><a class="brand footer-brand" href="#inicio"><span class="brand-mark" aria-hidden="true">at<span>.</span></span><span>Adrián Toso <small>Desarrollador Fullstack .NET</small></span></a><a class="back-top" href="#inicio">Volver arriba <span aria-hidden="true">↑</span></a></footer>
 </body>
