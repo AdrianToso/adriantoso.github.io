@@ -38,9 +38,10 @@ const OPENSPEC_PREFIX = 'openspec-';
 const MANAGED_PATH = /^\.(?:claude|cursor)\/(?:skills\/[^/]+\/.+|agents\/[^/]+\.md)$/;
 
 const abs = relativePath => path.join(root, relativePath);
+// lstat: un symlink no se sigue (se informa como conflicto).
 const statOf = relativePath => {
   try {
-    return fs.statSync(abs(relativePath));
+    return fs.lstatSync(abs(relativePath));
   } catch {
     return null;
   }
@@ -52,7 +53,7 @@ const fail = message => {
   console.error(`Error: ${message}`);
   process.exit(2);
 };
-const readJson = relativePath => JSON.parse(fs.readFileSync(abs(relativePath), 'utf8').replace(/^﻿/, ''));
+const readJson = relativePath => JSON.parse(fs.readFileSync(abs(relativePath), 'utf8').replace(/^\uFEFF/, ''));
 
 // Texto: CRLF -> LF, para comparar igual en Windows y en CI. Binario (tiene un byte NUL, como detecta git): tal cual.
 function normalized(relativePath) {
@@ -87,21 +88,23 @@ function runGit(gitArgs, input) {
 }
 
 // Git solo se usa si la raíz del proyecto es la raíz del repo; si no, las reglas serían las de otro repositorio.
+// --show-cdup da '' en la raíz y no depende de cómo se escribe la ruta (mayúsculas, nombres cortos 8.3).
 const gitAvailable = (() => {
-  const result = runGit(['rev-parse', '--show-toplevel']);
+  const result = runGit(['rev-parse', '--show-cdup']);
   const consequence = 'no se filtran los archivos ignorados ni se revisan las mayúsculas registradas en git';
   if (result.error?.code === 'ENOENT') {
     warn(`git no está disponible: ${consequence}.`);
     return false;
   }
-  if (result.error || result.status !== 0) {
-    warn(`no se pudo usar git (${(result.stderr || result.error?.message || '').trim().split('\n')[0]}): ${consequence}.`);
+  if (result.status !== 0 && /not a git repository/i.test(result.stderr ?? '')) {
+    warn(`el proyecto no es un repositorio git: ${consequence}.`);
     return false;
   }
-  const toplevel = path.resolve(result.stdout.trim());
-  const sameRoot = process.platform === 'win32' ? toplevel.toLowerCase() === root.toLowerCase() : toplevel === root;
-  if (!sameRoot) {
-    warn(`la raíz del repositorio git (${toplevel}) no es la del proyecto: ${consequence}.`);
+  if (result.error || result.status !== 0) {
+    fail(`git no se puede usar (${(result.stderr || result.error?.message || `código ${result.status}`).trim()}).`);
+  }
+  if (result.stdout.trim() !== '') {
+    warn(`el proyecto está dentro de otro repositorio git (raíz en ${result.stdout.trim()}): ${consequence}.`);
     return false;
   }
   return true;
@@ -118,9 +121,8 @@ function filterGitIgnored(files) {
   return files.filter(file => !ignored.has(file));
 }
 
-const indexPaths = gitAvailable
-  ? runGit(['ls-files', '-z', '--', 'ai-specs', ...TOOL_DIRS, ...RULES_COPIES]).stdout.split('\0').filter(Boolean)
-  : [];
+// Índice completo, sin pathspec: los pathspecs distinguen mayúsculas incluso con core.ignorecase=true.
+const indexPaths = gitAvailable ? runGit(['ls-files', '-z']).stdout.split('\0').filter(Boolean) : [];
 const exactIndex = new Set(indexPaths);
 const indexByLowerCase = new Map(indexPaths.map(file => [file.toLowerCase(), file]));
 // Ruta que git tiene registrada con otras mayúsculas (Windows no la corrige solo, con core.ignorecase=true).
@@ -187,15 +189,31 @@ function readManifest() {
 
 function readExternalEntries() {
   if (!exists(EXTERNAL_ENTRIES)) return new Map();
+  let data;
   try {
-    const { entries } = readJson(EXTERNAL_ENTRIES);
-    return new Map(Object.entries(entries ?? {}).filter(([, reason]) => typeof reason === 'string' && reason.trim()));
+    data = readJson(EXTERNAL_ENTRIES);
   } catch (error) {
-    return fail(`${EXTERNAL_ENTRIES} no es JSON válido (${error.message}).`);
+    fail(`${EXTERNAL_ENTRIES} no es JSON válido (${error.message}).`);
   }
+  const isPlainObject = value => value !== null && typeof value === 'object' && !Array.isArray(value);
+  if (!isPlainObject(data) || (data.entries !== undefined && !isPlainObject(data.entries))) {
+    fail(`${EXTERNAL_ENTRIES} tiene un formato inválido: se espera { "entries": { "<ruta>": "<motivo>" } }.`);
+  }
+  const approved = new Map();
+  for (const [key, reason] of Object.entries(data.entries ?? {})) {
+    const entryPath = key.replace(/\/+$/, '');
+    if (typeof reason !== 'string' || !reason.trim()) {
+      warn(`${EXTERNAL_ENTRIES}: la entrada ${key} no tiene un motivo; se ignora.`);
+    } else if (!/^\.(?:claude|cursor)\/(?:skills|agents)\/[^/\\]+$/.test(entryPath)) {
+      warn(`${EXTERNAL_ENTRIES}: ${key} no tiene la forma .claude/skills/<nombre> o .cursor/agents/<archivo>; se ignora.`);
+    } else {
+      approved.set(entryPath, reason.trim());
+    }
+  }
+  return approved;
 }
 
-// Primer ancestro de la ruta que existe pero no es carpeta (por ejemplo, un symlink de Specboot copiado como archivo).
+// Primer ancestro de la ruta que existe pero no es una carpeta real (un archivo o un symlink de Specboot).
 function blockingAncestor(relativePath) {
   let dir = path.posix.dirname(relativePath);
   while (dir !== '.') {
@@ -214,31 +232,39 @@ function removeEmptyParents(relativePath) {
   }
 }
 
+if (!statOf(RULES_SOURCE)?.isFile()) fail(`falta ${RULES_SOURCE}, la fuente de las reglas.`);
 const { targets, skills, agents, skillDirsWithoutSkillMd, skillMdCaseIssues } = buildTargets();
 const manifest = readManifest();
 const previous = manifest.entries;
 const approvedExternal = readExternalEntries();
 const editedByHand = target => previous.has(target) && hashOf(target) !== previous.get(target);
 
-const report = { created: [], updated: [], removed: [], external: [], approved: [], openspec: [] };
+const report = { created: [], updated: [], removed: [], replaced: [], external: [], approved: [], openspec: [], emptyDirs: [] };
 const conflicts = new Set(skillMdCaseIssues);
 const blocked = new Set();
-const ancestorsToReplace = new Set();
+const pathsToReplace = new Set();
+const blockingPaths = new Set();
 
 for (const [target, source] of targets) {
   const stat = statOf(target);
   if (!stat) {
     const ancestor = blockingAncestor(target);
+    if (ancestor) blockingPaths.add(ancestor);
     if (ancestor && !force) {
       blocked.add(target);
-      conflicts.add(`${ancestor} (es un archivo donde debería haber una carpeta, ¿un symlink de Specboot copiado como archivo?; borralo o usá --force)`);
+      conflicts.add(`${ancestor} (debería ser una carpeta real: es un archivo o un symlink, quizás de Specboot; borralo o usá --force)`);
     } else {
-      if (ancestor) ancestorsToReplace.add(ancestor);
+      if (ancestor) pathsToReplace.add(ancestor);
       report.created.push(target);
     }
+  } else if (stat.isSymbolicLink() && force) {
+    pathsToReplace.add(target);
+    report.created.push(target);
   } else if (!stat.isFile()) {
     blocked.add(target);
-    conflicts.add(`${target} (existe pero no es un archivo; revisalo)`);
+    conflicts.add(stat.isSymbolicLink()
+      ? `${target} (es un symlink; borralo o usá --force para reemplazarlo por la copia)`
+      : `${target} (existe pero no es un archivo; revisalo)`);
   } else if (!sameContent(target, source)) {
     if (!previous.has(target) && !force) {
       blocked.add(target);
@@ -277,7 +303,7 @@ for (const toolDir of TOOL_DIRS) {
   for (const skill of skills) {
     const copyDir = `${toolDir}/skills/${skill}`;
     for (const file of filterGitIgnored(walkFiles(copyDir))) {
-      if (!targets.has(file) && !previous.has(file)) {
+      if (!targets.has(file) && !previous.has(file) && !blockingPaths.has(file)) {
         conflicts.add(`${file} (archivo extra en una skill administrada; movelo a ai-specs/skills/${skill}/)`);
       }
     }
@@ -286,16 +312,25 @@ for (const toolDir of TOOL_DIRS) {
     if (approvedExternal.has(entryPath)) report.approved.push(`${entryPath}: ${approvedExternal.get(entryPath)}`);
     else report.external.push(entryPath);
   };
+  const candidates = [];
   for (const entry of dirEntries(`${toolDir}/skills`)) {
     const entryPath = `${toolDir}/skills/${entry.name}`;
     if (skills.includes(entry.name) || managedPaths.some(target => target.startsWith(`${entryPath}/`))) continue;
     if (entry.name.startsWith(OPENSPEC_PREFIX)) report.openspec.push(entryPath);
-    else classify(entryPath);
+    else candidates.push(entryPath);
   }
   for (const entry of dirEntries(`${toolDir}/agents`)) {
     const entryPath = `${toolDir}/agents/${entry.name}`;
-    if (!agents.includes(entry.name) && !previous.has(entryPath)) classify(entryPath);
+    if (!agents.includes(entry.name) && !previous.has(entryPath)) candidates.push(entryPath);
   }
+  // Lo que git ignora no llega a CI; una carpeta sin archivos versionables solo se informa.
+  for (const entryPath of filterGitIgnored(candidates)) {
+    if (isDir(entryPath) && !filterGitIgnored(walkFiles(entryPath)).length) report.emptyDirs.push(entryPath);
+    else classify(entryPath);
+  }
+}
+for (const entryPath of approvedExternal.keys()) {
+  if (!exists(entryPath)) warn(`${EXTERNAL_ENTRIES}: ${entryPath} está registrada pero no existe.`);
 }
 
 // Las copias bloqueadas conservan su hash anterior (o quedan sin registrar) hasta resolverse.
@@ -325,6 +360,7 @@ const printInventory = () => {
   print(`Entradas externas sin motivo registrado (movelas a ai-specs/ o registralas en ${EXTERNAL_ENTRIES}; ver docs/base-standards.md §6)`, report.external);
   print('Entradas externas registradas (no se tocan)', report.approved);
   print('Carpetas de ai-specs/skills sin SKILL.md (se ignoran)', skillDirsWithoutSkillMd);
+  print('Carpetas en .claude/ o .cursor/ sin archivos versionables (se pueden borrar)', report.emptyDirs);
   if (report.openspec.length) console.log(`Skills generadas por OpenSpec (no se tocan): ${report.openspec.length}`);
 };
 const summary = `${managedCount} archivos (${skills.length} skills, ${agents.length} agentes)`;
@@ -347,11 +383,15 @@ if (checkOnly) {
 // Primero se borra y después se escribe: en Windows, un renombre que solo cambia mayúsculas apunta al mismo archivo.
 for (const target of report.removed) {
   const resolved = path.resolve(abs(target));
-  if (!resolved.startsWith(root + path.sep)) fail(`ruta fuera del proyecto en el manifiesto: ${target}`);
+  const relative = path.relative(root, resolved);
+  if (!relative || relative.startsWith('..') || path.isAbsolute(relative)) fail(`ruta fuera del proyecto en el manifiesto: ${target}`);
   fs.rmSync(resolved);
   removeEmptyParents(target);
 }
-for (const ancestor of ancestorsToReplace) fs.rmSync(abs(ancestor));
+for (const replacedPath of pathsToReplace) {
+  fs.rmSync(abs(replacedPath));
+  report.replaced.push(replacedPath);
+}
 for (const [target, source] of targets) {
   if (blocked.has(target)) continue;
   const listed = report.created.includes(target) || report.updated.includes(target);
@@ -365,6 +405,7 @@ if (manifestOutdated) fs.writeFileSync(abs(MANIFEST), manifestContent);
 print('Creados', report.created);
 print('Actualizados', report.updated);
 print('Eliminados', report.removed);
+print('Reemplazados por la copia (--force)', report.replaced);
 print('Conflictos sin resolver', [...conflicts]);
 printInventory();
 const status = problems ? 'Sincronización incompleta' : pending || manifestOutdated ? 'Sincronización completa' : 'Sin cambios';

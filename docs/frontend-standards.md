@@ -61,7 +61,7 @@ Solo se publican los archivos listados uno por uno en `SITE_FILES` (`scripts/pac
 - **Impresión**: revisá `@media print` al agregar secciones. En papel se ocultan la navegación y los controles, y se muestran todos los certificados.
 - **Áreas táctiles**:
   - **Mínimo AA** (WCAG 2.2, criterio 2.5.8): 24×24 px.
-    - La excepción es un control más chico cuyo círculo de 24 px, centrado en él, no toque otro control (excepción de espaciado).
+    - La excepción es un control más chico cuyo círculo de 24 px, centrado en él, no toque otro control ni el círculo de otro control chico (excepción de espaciado). En la práctica, los centros de dos controles chicos tienen que quedar a 24 px o más.
     - Hoy cumplen solo por esa excepción algunos enlaces de texto de unos 19 a 21 px de alto: la navegación en anchos mayores a 620 px, "Ver certificados" del inicio, y "Ver GitHub" y "Ver carpeta completa" en anchos mayores a 620 px. No reduzcas su separación.
   - **Objetivo del proyecto**: 44 px de alto en mobile (`min-height`) para los controles nuevos. Controles actuales que no llegan (medidas aproximadas entre 320 y 390 px), pendientes de mejorar:
     - Botones de filtro de certificados: 42 px (`min-height:42px`).

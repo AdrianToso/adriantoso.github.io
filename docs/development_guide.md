@@ -13,7 +13,7 @@
 
 El sitio no tiene dependencias: no hay `package.json` ni `node_modules`.
 
-**Versión de OpenSpec**: el harness se adaptó con la 1.4.0. Las versiones nuevas cambian los workflows del perfil `core`: por ejemplo, la 1.13 suma `/opsx:update`, que en Cursor es `/opsx-update`. Antes de actualizar, revisá sus notas de versión. Después de actualizar:
+**Versión de OpenSpec**: el harness se adaptó con la 1.4.0. Las versiones nuevas cambian los workflows del perfil `core`: por ejemplo, desde la 1.6.0 el perfil `core` suma `/opsx:update` (en Cursor, `/opsx-update`) y la skill `openspec-update-change`. Antes de actualizar, revisá sus notas de versión. Después de actualizar:
 
 1. Ejecutá `openspec update`.
 2. Actualizá la tabla de la sección 5, `docs/base-standards.md` §7 y `ai-specs/specboot-instructions.md`.
@@ -74,9 +74,11 @@ El agente ejecuta estas comprobaciones por su cuenta y deja registrados los resu
 
   Si devuelve `legacy`, GitHub publica todo el repo desde la rama, incluidos `docs/` y `ai-specs/`. Si el comando falla (error, 404, `gh` sin autenticar), no se puede confirmar. En los dos casos, no hagas push ni merge hasta resolverlo.
 - `.nojekyll` solo sirve para la publicación desde rama. Se conserva por si alguna vez se vuelve a ese modo.
-- **Después de cada push**, seguí la ejecución de ese commit y revisá `https://adriantoso.github.io/`:
-  1. `gh run list --workflow pages.yml --commit <sha>`, con el sha de `git rev-parse HEAD`. La ejecución puede tardar unos segundos en aparecer.
-  2. `gh run watch <id> --exit-status`.
+- **Después de cada push o merge a `main`**, seguí el despliegue de ese commit y revisá `https://adriantoso.github.io/`:
+  1. Obtené el sha: `git rev-parse HEAD` si hiciste push directo, o `gh pr view <n> --json mergeCommit --jq .mergeCommit.oid` si fue un merge.
+  2. `gh run list --workflow pages.yml --branch main --event push --commit <sha>`. La ejecución puede tardar unos segundos en aparecer.
+  3. `gh run watch <id> --exit-status`.
+- Un push a una rama `feature/*` no dispara los workflows hasta que se abre el PR. Ahí los checks se ven con `gh pr checks <n>`.
 
 ## 5. Harness de IA (Specboot)
 
@@ -106,10 +108,13 @@ El agente ejecuta estas comprobaciones por su cuenta y deja registrados los resu
 - **Worktrees**: la skill `using-git-worktrees` prefiere la herramienta nativa.
   - En Claude Code, `EnterWorktree` crea el worktree en `.claude/worktrees/<nombre>`, sobre una rama nueva con un nombre que elige la herramienta. La rama parte de `origin/main`, salvo que la configuración `worktree.baseRef` valga `head`. Por eso no incluye los commits locales que todavía no subiste.
   - Antes de tocar archivos en el worktree:
-    1. Confirmá que incluye tu `main` local con `git merge-base --is-ancestor main HEAD`. Si no lo incluye y la rama no tiene commits propios, ejecutá `git merge --ff-only main`.
-    2. Creá la rama del cambio con `git switch -c feature/<cambio>`.
+    1. Confirmá que la base incluye tu `main` local: `git merge-base --is-ancestor main HEAD`.
+       - Si no lo incluye y la rama no tiene commits propios (`git rev-list --count HEAD --not main origin/main` da 0), ejecutá `git merge --ff-only main`.
+       - Si ese merge falla (`main` y `origin/main` divergieron) o la rama ya tiene commits propios, no sigas. Avisale al usuario que integre `origin/main` en su `main` local desde el checkout principal y repetí el paso.
+    2. Si la rama actual no es `feature/<cambio>` (con `EnterWorktree` nunca lo es), creala con `git switch -c feature/<cambio>`. Usá el mismo nombre en kebab-case que le vas a pasar a `/opsx:propose <cambio>`; si todavía no lo definiste, derivalo de la idea y usá ese nombre al proponer.
     3. Ejecutá la verificación base (sección 3).
-  - Con el mecanismo manual de git, los worktrees van en `.worktrees/`. Las dos carpetas están en `.gitignore`.
+  - Con el mecanismo manual de git, los worktrees van en `.worktrees/` y la rama se crea directamente como `feature/<cambio>` (no hace falta el paso 2). Las dos carpetas están en `.gitignore`.
+  - Si el worktree no tiene `openspec/config.yaml` ni `scripts/package-site.mjs`, está desactualizado: no sigas hasta resolver el paso 1.
 - **Validar la implementación contra los artefactos**: en el perfil `core` no existe `/opsx:verify`. Lo reemplazan los reportes obligatorios de `tasks.md` (`openspec/changes/<cambio>/reports/`), `openspec validate <cambio>` y la revisión adversarial.
 - **Modificar o completar artefactos** (ver `docs/base-standards.md` §7):
   - Para cambiar un artefacto existente, editalo siguiendo `openspec instructions <artefacto> --change <cambio>`, revisá los que dependen de él y comprobá con `openspec status --change <cambio>` y `openspec validate <cambio>`.

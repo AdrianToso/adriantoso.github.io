@@ -30,7 +30,7 @@ Proceso:
    |---|---|
    | Secciones, anclas, tarjetas, categorías o fuentes del contenido | `docs/content-model.md` y, si corresponde, `README.md` |
    | Cantidad de certificados | `.certificate-count` en `index.html`, `docs/content-model.md` y `README.md` |
-   | CV (`downloads/Adrian-Toso-CV.pdf`) | Textos del inicio y de la sección del CV en `index.html`, `docs/content-model.md` §7, `README.md` y, si cambia el nombre, `SITE_FILES` |
+   | CV (`downloads/Adrian-Toso-CV.pdf`) | Textos del inicio y de la sección del CV en `index.html`, `docs/content-model.md` §7, `README.md` y, si cambia el nombre, todo lo que indica `docs/content-model.md` §7 |
    | Archivo nuevo que el sitio necesita | `SITE_FILES` en `scripts/package-site.mjs`, `docs/frontend-standards.md` (estructura) y `README.md` |
    | Convenciones de HTML, CSS o JS, breakpoints o tokens | `docs/frontend-standards.md` |
    | Forma de previsualizar, verificar o publicar | `docs/development_guide.md` y `README.md` |

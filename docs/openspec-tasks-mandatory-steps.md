@@ -18,8 +18,10 @@ Al crear o actualizar un `tasks.md` en `openspec/changes/<cambio>/`:
 - Rama `feature/<nombre-del-cambio>` desde `main`.
 - Crearla y cambiarse a ella antes de tocar cualquier archivo.
 - **En un worktree** (skill `using-git-worktrees`), antes de tocar archivos:
-  1. Confirmá que la base incluye tu `main` local con `git merge-base --is-ancestor main HEAD`. Si no lo incluye y la rama no tiene commits propios, ejecutá `git merge --ff-only main`.
-  2. Si la rama del worktree no se llama `feature/<nombre-del-cambio>`, creala ahí mismo con `git switch -c feature/<nombre-del-cambio>` (ver `docs/development_guide.md` §5).
+  1. Confirmá que la base incluye tu `main` local: `git merge-base --is-ancestor main HEAD`.
+     - Si no lo incluye y la rama no tiene commits propios (`git rev-list --count HEAD --not main origin/main` da 0), ejecutá `git merge --ff-only main`.
+     - Si ese merge falla (`main` y `origin/main` divergieron) o la rama ya tiene commits propios, no sigas. Avisale al usuario que integre `origin/main` en su `main` local desde el checkout principal y repetí el paso.
+  2. Si la rama del worktree no se llama `feature/<nombre-del-cambio>`, creala ahí mismo con `git switch -c feature/<nombre-del-cambio>`, con el mismo nombre del cambio de OpenSpec (ver `docs/development_guide.md` §5).
 
 ### Pasos obligatorios al final (en este orden)
 

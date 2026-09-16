@@ -57,6 +57,7 @@ Este proyecto no tiene backend, así que no hay `backend-standards.md`, `api-spe
   - Las skills nuevas del proyecto van en `ai-specs/skills/<skill>/` y se sincronizan (no en `~/.claude/skills`).
   - No se recomiendan ni agregan dependencias (sección 1).
   - Los reportes de auditoría o revisión van en `openspec/changes/<cambio>/reports/` o, si no hay un cambio activo, en `docs/agent_outputs/<skill>/`. Nunca en la raíz del proyecto.
+  - `using-git-worktrees`: después de crear el worktree, y antes de la verificación base o de cualquier `/opsx:*`, seguí el apartado "Worktrees" de `docs/development_guide.md` §5. Hay que confirmar que el worktree incluye tu `main` local y crear `feature/<cambio>`. Si al worktree le faltan `openspec/config.yaml` o `scripts/package-site.mjs`, no sigas y avisale al usuario.
 
 ## 5. Modelo para planificar
 

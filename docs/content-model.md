@@ -101,7 +101,10 @@ Para un emisor nuevo, agregá su clase `issuer-*` en `styles.css`.
 
 - `downloads/Adrian-Toso-CV.pdf`: versión profesional regenerada de dos páginas, sin datos sensibles.
   - Si cambia la cantidad de páginas, actualizá la leyenda "CV en PDF · 2 páginas" del inicio, el texto "un PDF de dos páginas" de la sección del CV (`cv-title`), este documento y `README.md`.
-  - Si cambia el nombre del archivo, actualizá también `SITE_FILES` en `scripts/package-site.mjs` y los dos enlaces de `index.html`.
+  - Si cambia el nombre del archivo, actualizá también:
+    - `SITE_FILES` en `scripts/package-site.mjs`.
+    - Los tres `href` y los dos atributos `download` de `index.html` (inicio y sección del CV).
+    - Las menciones de la ruta en `README.md`, `docs/frontend-standards.md` §2 y `docs/base-standards.md` §0 y §8. Después ejecutá `node ai-specs/scripts/sync-agent-files.mjs`.
 - Contacto: el correo profesional publicado y el perfil de GitHub. No agregues teléfono, dirección ni formularios.
 
 ## 8. Fuentes

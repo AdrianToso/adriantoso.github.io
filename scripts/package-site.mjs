@@ -20,11 +20,30 @@ const errors = [];
 fs.rmSync(output, { recursive: true, force: true });
 fs.mkdirSync(output);
 
+// Existe como archivo con las mayúsculas exactas en cada segmento (en Windows, existsSync no las distingue).
+function isFileWithExactCase(relativePath) {
+  let dir = root;
+  const segments = relativePath.split('/');
+  for (const [index, segment] of segments.entries()) {
+    let entries;
+    try {
+      entries = fs.readdirSync(dir, { withFileTypes: true });
+    } catch {
+      return false;
+    }
+    const entry = entries.find(item => item.name === segment);
+    const isLast = index === segments.length - 1;
+    if (!entry || (isLast ? !entry.isFile() : !entry.isDirectory())) return false;
+    dir = path.join(dir, segment);
+  }
+  return true;
+}
+
 if (!published.has('index.html')) errors.push("SITE_FILES tiene que incluir 'index.html'.");
 for (const file of SITE_FILES) {
   const source = path.join(root, file);
-  if (!fs.existsSync(source) || !fs.statSync(source).isFile()) {
-    errors.push(`'${file}' está en SITE_FILES pero no existe o no es un archivo.`);
+  if (!isFileWithExactCase(file)) {
+    errors.push(`'${file}' está en SITE_FILES pero no existe con esas mayúsculas o no es un archivo.`);
     continue;
   }
   const destination = path.join(output, file);
@@ -82,7 +101,8 @@ const indexPath = path.join(output, 'index.html');
 const localReferences = new Set();
 if (fs.existsSync(indexPath)) {
   const html = fs.readFileSync(indexPath, 'utf8').replace(/<!--[\s\S]*?-->/g, '');
-  for (const tag of html.match(/<[a-z][^\s>/]*(?:[^>"']|"[^"]*"|'[^']*')*>/gi) ?? []) {
+  // Las comillas solo delimitan un valor después de '=' (un apóstrofo suelto no abre un valor).
+  for (const tag of html.match(/<[a-z][^\s>/]*(?:=\s*(?:"[^"]*"|'[^']*')|=(?!\s*["'])|[^>=])*>/gi) ?? []) {
     const tagName = tag.slice(1).split(/[\s>/]/)[0].toLowerCase();
     const attributes = parseAttributes(tag);
     const references = ['href', 'src', 'poster'].filter(name => attributes.has(name)).map(name => attributes.get(name));

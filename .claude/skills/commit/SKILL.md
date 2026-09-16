@@ -75,12 +75,20 @@ Estas comprobaciones miran el árbol de trabajo, así que hacelas antes de prepa
 
 - **Sin argumentos**: preparar todos los cambios relevantes. Excluir secretos, `_site/`, `.claude/settings.local.json` y archivos locales.
 - **Con argumentos**: asociar cada argumento con sus cambios (por ruta, clave de ticket o nombre en la rama, o contexto del diff) y preparar solo esos archivos o fragmentos.
-  - **Fragmentos**: si un archivo mezcla cambios relacionados y ajenos, prepará solo los que corresponden. `git add -p` es interactivo y no funciona en la terminal de un agente. Usá este equivalente no interactivo:
-    1. Guardá `git diff -- <archivo>` en un parche **fuera del repo** (en un directorio temporal).
-    2. Editá el parche. Quitá los fragmentos ajenos. Si un fragmento mezcla los dos cambios, borrá las líneas `+` ajenas y convertí las `-` ajenas en contexto (reemplazá el `-` por un espacio).
-    3. Aplicalo con `git apply --cached --recount <parche>`, confirmá con `git diff --staged` y borrá el parche.
+  - **Parte de un archivo**: si un archivo mezcla cambios del alcance y ajenos, prepará solo los del alcance. `git add -p` es interactivo y no funciona en la terminal de un agente. Usá este método no interactivo, que no depende del orden de las líneas ni del shell (evitá redirigir con `>`: en PowerShell 5.1 escribe UTF-16):
+    1. Copiá la versión del índice a un directorio temporal **fuera del repo**: `git checkout-index --prefix=<dir-temporal>/ -- <archivo>`.
+    2. En esa copia, aplicá solo los cambios del alcance, tomándolos del archivo del árbol de trabajo.
+    3. Registrala en el índice:
+       ```bash
+       git hash-object -w --path=<archivo> <dir-temporal>/<archivo>   # devuelve <blob>
+       git ls-files -s -- <archivo>                                    # primera columna: <modo>
+       git update-index --cacheinfo <modo>,<blob>,<archivo>
+       ```
+    4. Confirmá con `git diff --staged -- <archivo>` (solo el alcance) y `git diff -- <archivo>` (solo lo ajeno), y borrá el directorio temporal.
+    - Si alcanza con descartar fragmentos completos, también sirve un parche: `git diff --output=<dir-temporal>/cambio.patch -- <archivo>`, borrar los fragmentos ajenos y `git apply --cached --recount <dir-temporal>/cambio.patch`.
   - Si ningún cambio coincide con los argumentos, informarlo y no commitear.
 - **Archivos generados**: prepará también lo que generaron el paso 3 y que corresponde al alcance: la documentación actualizada, las copias de `.claude/` y `.cursor/`, `CLAUDE.md`, `AGENTS.md`, `GEMINI.md`, `codex.md` y `ai-specs/sync-manifest.json`. Confirmalo con `git diff --staged`.
+  - Si quedan cambios del harness fuera del alcance, el manifiesto también tiene sus hashes. Prepará solo las líneas del manifiesto que corresponden a las copias del alcance (cada entrada ocupa una línea), con el método de "Parte de un archivo". Si no, el check **Copias sincronizadas** falla.
 - **Límite de los controles**: en un commit con argumentos, los controles locales validan el árbol de trabajo completo. Lo que valida exactamente el commit son los checks del PR.
 
 ### 5. Mensaje del commit
@@ -104,10 +112,12 @@ Estas comprobaciones miran el árbol de trabajo, así que hacelas antes de prepa
   - **Estado para el merge**: ejecutá el control de publicación y reflejalo en la descripción y en el resumen.
     - Con `workflow`: el PR queda listo para revisar cuando pasen los checks **Armar y validar** y **Copias sincronizadas** (`gh pr checks`), y al hacer merge en `main` el workflow `pages.yml` publica el sitio.
     - Con cualquier otro resultado: agregá en los pendientes "No hacer merge hasta cambiar Settings → Pages → Source a GitHub Actions: con la publicación desde la rama se publicaría todo el repo, harness incluido". No digas que `pages.yml` publica.
-- **Commit directo en `main`**: no se crea PR. Seguí la publicación del commit que acabás de subir:
-  1. `gh run list --workflow pages.yml --commit <sha>` (con el sha de `git rev-parse HEAD`). Si todavía no aparece, esperá unos segundos y reintentá.
-  2. `gh run watch <id> --exit-status`.
+- **Commit directo en `main`**: no se crea PR. Seguí los dos workflows del commit que acabás de subir (sha de `git rev-parse HEAD`):
+  1. `gh run list --workflow pages.yml --branch main --event push --commit <sha>` y `gh run list --workflow harness.yml --branch main --event push --commit <sha>`. Si todavía no aparecen, esperá unos segundos y reintentá.
+  2. `gh run watch <id> --exit-status` para cada uno.
   3. Al terminar, revisá `https://adriantoso.github.io/`.
+- **Después del merge de un PR**: seguí lo mismo con el sha del merge (`gh pr view <n> --json mergeCommit --jq .mergeCommit.oid`).
+- En un push a una rama `feature/*`, estos workflows no corren hasta que haya un PR: los checks se ven con `gh pr checks`.
 
 ### 8. Resumen para el usuario
 
