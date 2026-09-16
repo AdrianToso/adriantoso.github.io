@@ -12,7 +12,7 @@
     ".claude/skills/explain/SKILL.md": "66175f3a095b5f8ddc906251a705f6b1b61ec877a66a4d0c3585899f99a33ea7",
     ".claude/skills/meta-prompt/SKILL.md": "568950c753cf7515422ced05ec918697f92a81429b5423ba8ded68e20169c3f5",
     ".claude/skills/show-spec-working/SKILL.md": "2bf41b5cc16eff4d6b4a0103589ba3c48161daba8a09b668fde7348b670807e7",
-    ".claude/skills/sync-agent-files/SKILL.md": "acc12bea38b515ee939675f45c9eaebe70f3dbfdb44832625dffe60f8e4879e8",
+    ".claude/skills/sync-agent-files/SKILL.md": "676f050a6a48c9affb788d24f6ddf55948b7c60e9f5227ba67e2a18be948e269",
     ".claude/skills/update-docs/SKILL.md": "448f6009918daec998ec1ce67fa9b8ba7ade2ebd20dbf5dba72d111527736bd3",
     ".claude/skills/using-git-worktrees/SKILL.md": "0941d2633846c560b3bc1e90da47b2b2957cf17894afc0ab92b13a8d660641e1",
     ".claude/skills/writing-skills/SKILL.md": "38ba648975ae6ba512d6695676f146163db61a496b867f716f4bdfb0ee3aca3e",
@@ -33,7 +33,7 @@
     ".cursor/skills/explain/SKILL.md": "66175f3a095b5f8ddc906251a705f6b1b61ec877a66a4d0c3585899f99a33ea7",
     ".cursor/skills/meta-prompt/SKILL.md": "568950c753cf7515422ced05ec918697f92a81429b5423ba8ded68e20169c3f5",
     ".cursor/skills/show-spec-working/SKILL.md": "2bf41b5cc16eff4d6b4a0103589ba3c48161daba8a09b668fde7348b670807e7",
-    ".cursor/skills/sync-agent-files/SKILL.md": "acc12bea38b515ee939675f45c9eaebe70f3dbfdb44832625dffe60f8e4879e8",
+    ".cursor/skills/sync-agent-files/SKILL.md": "676f050a6a48c9affb788d24f6ddf55948b7c60e9f5227ba67e2a18be948e269",
     ".cursor/skills/update-docs/SKILL.md": "448f6009918daec998ec1ce67fa9b8ba7ade2ebd20dbf5dba72d111527736bd3",
     ".cursor/skills/using-git-worktrees/SKILL.md": "0941d2633846c560b3bc1e90da47b2b2957cf17894afc0ab92b13a8d660641e1",
     ".cursor/skills/writing-skills/SKILL.md": "38ba648975ae6ba512d6695676f146163db61a496b867f716f4bdfb0ee3aca3e",
@@ -43,9 +43,9 @@
     ".cursor/skills/writing-skills/persuasion-principles.md": "c3c84f572a51dd8b6d4fc6e5cbdc2bc3b9e07ba381a45bdabfce7ad2894dd828",
     ".cursor/skills/writing-skills/render-graphs.js": "ccda971a87bb185f8febf81c56b556a20d026fa980c17b35fa3e8824fbb37852",
     ".cursor/skills/writing-skills/testing-skills-with-subagents.md": "c711346852c911b24a84aa161e0cff06a4cd7f4e2fa9e9c0a266cead5afcbade",
-    "AGENTS.md": "7c343b0ed5e5acb0610e3f5e2d31c58c627c258d02fe7f143444e4ec3b94ce82",
-    "CLAUDE.md": "7c343b0ed5e5acb0610e3f5e2d31c58c627c258d02fe7f143444e4ec3b94ce82",
-    "GEMINI.md": "7c343b0ed5e5acb0610e3f5e2d31c58c627c258d02fe7f143444e4ec3b94ce82",
-    "codex.md": "7c343b0ed5e5acb0610e3f5e2d31c58c627c258d02fe7f143444e4ec3b94ce82"
+    "AGENTS.md": "ac2cb2d795c90953bfdab5a76396d6e4d6b8ab70ade0599faacc0cc9047af686",
+    "CLAUDE.md": "ac2cb2d795c90953bfdab5a76396d6e4d6b8ab70ade0599faacc0cc9047af686",
+    "GEMINI.md": "ac2cb2d795c90953bfdab5a76396d6e4d6b8ab70ade0599faacc0cc9047af686",
+    "codex.md": "ac2cb2d795c90953bfdab5a76396d6e4d6b8ab70ade0599faacc0cc9047af686"
   }
 }

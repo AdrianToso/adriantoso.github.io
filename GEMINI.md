@@ -73,6 +73,7 @@ Este proyecto no tiene backend, así que no hay `backend-standards.md`, `api-spe
   - `.claude/skills/<skill>/` y `.cursor/skills/<skill>/` desde `ai-specs/skills/<skill>/`.
   - `.claude/agents/<agente>.md` y `.cursor/agents/<agente>.md` desde `ai-specs/agents/`.
   - `CLAUDE.md`, `AGENTS.md`, `GEMINI.md` y `codex.md` desde este archivo.
+- **Sin enlaces**: no crees symlinks, junctions ni hardlinks para las fuentes, las copias ni sus carpetas, aunque Specboot original use symlinks y Windows permita junctions sin permisos de administrador. A través de un enlace, la "copia" es la fuente. El script corta si encuentra uno en las fuentes o en sus archivos de control, y lo informa como conflicto en las copias y las entradas externas (detalle en la skill `sync-agent-files`).
 - **Nunca edites las copias**: editá la fuente y ejecutá el script. El script guarda el hash de cada copia en `ai-specs/sync-manifest.json`. Si alguien edita una copia, la informa como conflicto y no la pisa sin `--force`: el cambio se traslada a la fuente.
 - **Después de cada cambio** en `ai-specs/` o en este archivo (crear, editar, renombrar, mover o borrar), ejecutá el script.
 - **Control de cierre**: un cambio no está completo si `node ai-specs/scripts/sync-agent-files.mjs --check` falla. Falla, por ejemplo, con:

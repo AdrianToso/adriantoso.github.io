@@ -53,6 +53,7 @@ OpenSpec genera y actualiza (`openspec update`) sus propias skills (`openspec-pr
   - Exige registrar con su motivo las entradas externas.
   - Ignora los archivos que git ignora.
   - Detecta los renombres de mayúsculas que git no registró.
+  - Nunca lee, escribe ni borra a través de un enlace (symlink, junction o hardlink). Corta si hay enlaces en las fuentes y los informa como conflicto en las copias.
   - Se recupera de un manifiesto dañado sin borrar nada.
 - **Español**: reglas, docs, specs y commits en español, como el resto del repo. Las skills genéricas conservan su texto original.
 - **Sin backend**: se omitieron `backend-standards.md`, `api-spec.yml`, `data-model.md`, el agente `backend-developer`, la modalidad backend/curl de `show-spec-working` y `ai-specs/scripts/code_review.sh` (depende del CLI `agent` de Cursor). `data-model.md` y `api-spec.yml` se reemplazaron por `docs/content-model.md`.
