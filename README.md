@@ -27,11 +27,11 @@ Guía oficial: https://docs.github.com/en/pages/getting-started-with-github-page
 - `styles.css`: diseño adaptable, estilos de impresión y preferencia de movimiento reducido.
 - `favicon.svg`: identidad del sitio.
 - `script.js`: filtros de certificados e indicador de sección activa.
-- `downloads/Adrian-Toso-CV.pdf`: CV profesional de dos páginas, sin datos personales sensibles.
+- `downloads/Adrian-Toso-CV.pdf`: CV profesional ampliado de tres páginas, sin datos personales sensibles.
 - `scripts/package-site.mjs` y `.github/workflows/pages.yml`: armado y publicación del sitio.
 - `.nojekyll`: solo aplica a la publicación desde rama. Se conserva por si se vuelve a ese modo.
 
-El contenido profesional se adaptó de `AdrianToso_CV_Resume.pdf`, proporcionado por su titular. Las fechas, empresas y formación se conservaron sin añadir métricas o atribuciones no documentadas. El puesto actual se muestra como figura en el CV; actualizarlo cuando cambie.
+El contenido profesional se amplió el 16 de septiembre de 2026 a partir de `AdrianToso_CV_Resume.pdf` y del CV ampliado enlazado desde ese documento, contrastado con `Adrian_Toso_Cv_Detallado.pdf`. Se revisaron conversaciones disponibles y la implementación de CQAgent en la rama local `feature/chat-ai`, junto con la declaración del titular sobre su participación. Los documentos originales y las conversaciones no se distribuyen. Las fechas, empresas y formación se conservaron sin añadir métricas o atribuciones no documentadas. El puesto actual se muestra como figura en el CV; actualizarlo cuando cambie.
 
 Los proyectos se complementaron con sus repositorios públicos consultados el 16 de septiembre de 2026:
 
@@ -67,3 +67,7 @@ El repo incluye una adaptación del harness [Specboot](https://lidr.co/ia-devs) 
 - **Antes de hacer push o merge a `main`**: `gh api 'repos/{owner}/{repo}/pages' --jq .build_type` tiene que devolver `workflow`. Las comillas son necesarias en PowerShell. Si devuelve otra cosa o falla, no hacer push.
 
 Detalle, diferencias con Specboot original y créditos: `ai-specs/specboot-instructions.md`.
+
+## Experiencia ampliada
+
+Las seis experiencias incluyen contexto, un aporte destacado y contribuciones concretas. El CV de tres páginas conserva los mismos aportes, fechas y puestos. NEORIS distingue el desarrollo de SIGMA de la aplicación de ejemplo para actualización tecnológica. Concrete-Quality incluye implementación y evolución del agente Python e integración de IA, sin afirmar su autoría original ni el despliegue productivo de todas sus capacidades. No se agregan métricas ni antigüedad Senior inferida de respuestas anteriores de IA.

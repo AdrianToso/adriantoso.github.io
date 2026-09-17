@@ -32,7 +32,7 @@ Reglas:
 <article class="experience-row">
   <div class="experience-date"><span>Mmm. AAAA — Mmm. AAAA</span><!-- opcional: <span class="current-label">ACTUAL</span> --></div>
   <div class="experience-company"><h3>Empresa</h3><p>Puesto</p><span class="sector">Sector (opcional)</span></div>
-  <div class="experience-description"><p>Descripción breve.</p><div class="tags"><span>Tecnología</span>…</div></div>
+  <div class="experience-description"><p class="experience-impact">Aporte destacado.</p><p>Contexto de negocio.</p><ul class="experience-contributions"><li>Contribución y valor respaldados por la fuente.</li></ul><div class="tags"><span>Tecnología</span>…</div></div>
 </article>
 ```
 
@@ -99,8 +99,8 @@ Para un emisor nuevo, agregá su clase `issuer-*` en `styles.css`.
 
 ## 7. CV y contacto
 
-- `downloads/Adrian-Toso-CV.pdf`: versión profesional regenerada de dos páginas, sin datos sensibles.
-  - Si cambia la cantidad de páginas, actualizá la leyenda "CV en PDF · 2 páginas" del inicio, el texto "un PDF de dos páginas" de la sección del CV (`cv-title`), este documento y `README.md`.
+- `downloads/Adrian-Toso-CV.pdf`: versión profesional ampliada de tres páginas, sin datos sensibles.
+  - Si cambia la cantidad de páginas, actualizá la leyenda "CV en PDF · 3 páginas" del inicio, el texto "un PDF de tres páginas" de la sección del CV (`cv-title`), este documento y `README.md`.
   - Si cambia el nombre del archivo, actualizá también:
     - `SITE_FILES` en `scripts/package-site.mjs`.
     - Los tres `href` y los dos atributos `download` de `index.html` (inicio y sección del CV).
@@ -109,7 +109,9 @@ Para un emisor nuevo, agregá su clase `issuer-*` en `styles.css`.
 
 ## 8. Fuentes
 
-- Contenido profesional: adaptado de `AdrianToso_CV_Resume.pdf`, provisto por el titular. Ese archivo no se distribuye.
+- Contenido profesional: ampliado el 16 de septiembre de 2026 a partir de `AdrianToso_CV_Resume.pdf` y su CV ampliado en Google Docs, contrastado con `Adrian_Toso_Cv_Detallado.pdf`. Esos archivos originales no se distribuyen.
+- Concrete-Quality: aporte declarado por el titular, conversaciones de trabajo disponibles y código de CQAgent en la rama local `feature/chat-ai`, revisados el 16 de septiembre de 2026. Se describen implementación e integración, sin afirmar autoría original ni despliegue productivo completo.
+- Cada experiencia incluye contexto y contribuciones visibles sin JavaScript. La aplicación .NET 8 de NEORIS se identifica como ejemplo de actualización tecnológica.
 - Proyectos: sus repositorios públicos, consultados el 16 de septiembre de 2026.
 - Certificados: la carpeta pública de Google Drive enlazada desde el CV ampliado.
 
