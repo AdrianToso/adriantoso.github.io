@@ -39,6 +39,7 @@ Reglas:
 - Orden cronológico inverso. Solo el puesto actual lleva "Actualidad" y `current-label`.
 - Meses abreviados con punto (`Ene.`, `Sep.`, `Dic.`) y rango separado por raya (`—`).
 - Fechas, empresas y puestos salen del CV del titular. No agregues métricas ni logros sin documentar.
+- Los tres bloques se ubican con `grid-column` y `grid-row` explícitos: `.experience-date` y `.experience-company` en una columna lateral de 230 px y `.experience-description` en la principal, ocupando `grid-row: 1 / 3`. En 620 px o menos se apilan en el orden del marcado. Si agregás un bloque nuevo, asignale su posición o va a caer sobre otro.
 
 ## 3. Proyectos (`.project-card`)
 

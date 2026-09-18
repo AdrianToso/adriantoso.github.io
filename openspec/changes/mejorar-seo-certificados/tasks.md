@@ -14,16 +14,16 @@
 
 ## 2. Verificación local en el navegador (OBLIGATORIO, LO EJECUTA EL AGENTE)
 
-- [ ] 2.1 Comprobar escenarios, consola y anchos 1920, 1440, 1024, 768, 390, 360, 320 y equivalente a zoom 200%; guardar reports/2026-09-18-paso-2-diseno-general.md.
+- [x] 2.1 Comprobar escenarios, consola y anchos 1920, 1440, 1024, 768, 390, 360, 320 y equivalente a zoom 200%; guardar reports/2026-09-18-paso-2-diseno-general.md.
 
 ## 3. Accesibilidad y mejora progresiva (OBLIGATORIO, LO EJECUTA EL AGENTE)
 
-- [ ] 3.1 Revisar sin JS, teclado, nombres accesibles e impresión; movimiento reducido sin animaciones nuevas; guardar reports/2026-09-18-paso-3-diseno-accesibilidad.md.
+- [x] 3.1 Revisar sin JS, teclado, nombres accesibles e impresión; movimiento reducido sin animaciones nuevas; guardar reports/2026-09-18-paso-3-diseno-accesibilidad.md.
 
 ## 4. Publicación y harness (OBLIGATORIO, LO EJECUTA EL AGENTE)
 
-- [ ] 4.1 Validar paquete de siete archivos, referencias locales, privacidad, CV intacto y harness; guardar reports/2026-09-18-paso-4-diseno-publicacion.md. Publicación remota fuera de este cambio hasta pedido explícito.
+- [x] 4.1 Validar paquete de siete archivos, referencias locales, privacidad, CV intacto y harness; guardar reports/2026-09-18-paso-4-diseno-publicacion.md. Publicación remota fuera de este cambio hasta pedido explícito.
 
 ## 5. Documentación (OBLIGATORIO)
 
-- [ ] 5.1 Aplicar update-docs a README, modelo de contenido, estructura de archivos y guía SEO; validar OpenSpec y diff.
+- [x] 5.1 Aplicar update-docs a README, modelo de contenido, estructura de archivos y guía SEO; validar OpenSpec y diff.
