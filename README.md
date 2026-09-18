@@ -26,6 +26,7 @@ Guía oficial: https://docs.github.com/en/pages/getting-started-with-github-page
 - `index.html`: presentación, experiencia, proyectos, tecnologías, formación y contacto.
 - `styles.css`: diseño adaptable, estilos de impresión y preferencia de movimiento reducido.
 - `favicon.svg`: identidad del sitio.
+- `robots.txt` y `sitemap.xml`: rastreo y URL canónica para buscadores.
 - `script.js`: filtros de certificados e indicador de sección activa.
 - `downloads/Adrian-Toso-CV.pdf`: CV profesional ampliado de tres páginas, sin datos personales sensibles.
 - `scripts/package-site.mjs` y `.github/workflows/pages.yml`: armado y publicación del sitio.
@@ -51,9 +52,17 @@ HTML semántico, navegación por teclado, enlace para saltar al contenido, foco 
 
 Se incluyen 12 certificados distintos de la carpeta pública enlazada desde el CV ampliado. Se revisaron el titular, título y fecha en los comprobantes. El diploma de metodología aparecía duplicado y se muestra una sola vez.
 
-Se usan enlaces individuales a los PDF en Google Drive, accesibles sin iniciar sesión al verificarlos. Las páginas de Udemy devolvieron HTTP 403 al comprobador automático, por eso no se publicaron como enlaces principales. No confundir la fecha de emisión con el año de la edición del curso (por ejemplo, OWASP Top 10 2021).
+Verificados en navegador el 17 de septiembre de 2026: seis enlaces originales de Udemy muestran el certificado sin iniciar sesión y se usan como destino principal. Los cinco certificados NEORIS abren sus PDF públicos en Drive. El 18 de septiembre de 2026 se incorporaron los dos enlaces aportados por el titular para Scrum: registro oficial de SCRUMstudy y diploma PDF original, ambos verificados sin iniciar sesión. El registro confirma la credencial 1039383, emisión 04/07/2024 y ausencia de vencimiento. La carpeta completa conserva las copias de respaldo. El enlace incompleto de GitHub Copilot del CV ampliado se reconstruyó con el código del diploma y se verificó en Udemy. Un 403 de un comprobador automático no demuestra que el enlace falle para un visitante. No confundir la fecha de emisión con el año de la edición del curso (por ejemplo, OWASP Top 10 2021).
+
+Las tarjetas separan información y acciones: Ver en Udemy, Ver diploma PDF y, para Scrum, Verificar credencial. Los filtros miden al menos 44 px de alto y los enlaces de las tarjetas al menos 52 px en los anchos comprobados. El CSS lleva una versión en la URL para evitar que se conserve el diseño anterior en caché.
 
 Los filtros solo se muestran cuando JavaScript se inicializa. Sin JavaScript se ven todos los certificados; los enlaces, la descarga del CV y los detalles de proyectos siguen funcionando. La preferencia de movimiento reducido se respeta.
+
+## Posicionamiento en buscadores
+
+Título y descripción describen el perfil .NET, Angular y la integración de IA ya visible en el sitio. La identidad está marcada con microdatos `ProfilePage` y `Person`, disponibles sin JavaScript. `canonical`, `og:url` y el sitemap apuntan a `https://adriantoso.github.io/`.
+
+El sitemap contiene una sola página: las anclas de las secciones no son páginas independientes. No se usan palabras clave ocultas, métricas inventadas, analítica ni scripts externos. Para los pasos posteriores a la publicación, ver [guía de posicionamiento](docs/seo.md). Estas mejoras ayudan al rastreo y la comprensión del contenido; no garantizan indexación ni una posición determinada.
 
 ## Desarrollo con IA (Specboot + OpenSpec)
 

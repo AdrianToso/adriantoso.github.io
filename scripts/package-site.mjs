@@ -8,7 +8,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 // Lista explícita de archivos (no carpetas): si el sitio necesita uno nuevo, agregalo acá.
-const SITE_FILES = ['index.html', 'styles.css', 'script.js', 'favicon.svg', 'downloads/Adrian-Toso-CV.pdf'];
+const SITE_FILES = ['index.html', 'styles.css', 'script.js', 'favicon.svg', 'robots.txt', 'sitemap.xml', 'downloads/Adrian-Toso-CV.pdf'];
 const OUTPUT_DIR = '_site';
 const EXTERNAL_URL = /^(?:\/\/|(?:https?|mailto|tel|data):)/i;
 
