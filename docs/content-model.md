@@ -39,6 +39,7 @@ Reglas:
 - Orden cronológico inverso. Solo el puesto actual lleva "Actualidad" y `current-label`.
 - Meses abreviados con punto (`Ene.`, `Sep.`, `Dic.`) y rango separado por raya (`—`).
 - Fechas, empresas y puestos salen del CV del titular. No agregues métricas ni logros sin documentar.
+- Los tres bloques se ubican con `grid-column` y `grid-row` explícitos: `.experience-date` y `.experience-company` en una columna lateral de 230 px y `.experience-description` en la principal, ocupando `grid-row: 1 / 3`. En 620 px o menos se apilan en el orden del marcado. Si agregás un bloque nuevo, asignale su posición o va a caer sobre otro.
 
 ## 3. Proyectos (`.project-card`)
 
@@ -63,7 +64,7 @@ Seis grupos fijos: Backend · Frontend y escritorio · Datos y persistencia · A
 <article class="certificate-card" data-category="desarrollo">
   <div class="certificate-meta"><span class="issuer-icon issuer-udemy" aria-hidden="true">U</span><span>Udemy</span><time datetime="2025-05-25">25 may. 2025</time></div>
   <h3>Título</h3><p>Subtítulo o detalle</p>
-  <a class="certificate-link" href="https://drive.google.com/file/d/…/view" target="_blank" rel="noopener noreferrer">Ver certificado <span class="sr-only">de Título en Google Drive (abre otra pestaña)</span><span aria-hidden="true">↗</span></a>
+  <div class="certificate-actions"><a class="certificate-link" href="https://drive.google.com/file/d/…/view" target="_blank" rel="noopener noreferrer">Ver diploma PDF <span class="sr-only">de Título en Google Drive (abre otra pestaña)</span><span aria-hidden="true">↗</span></a></div>
 </article>
 ```
 
@@ -93,7 +94,9 @@ Para un emisor nuevo, agregá su clase `issuer-*` en `styles.css`.
 - Todo `data-category` tiene su botón con el mismo `data-filter`, y todo botón (salvo `todos`) tiene al menos una tarjeta.
 - El texto inicial de `.certificate-count` ("12 certificados") coincide con la cantidad de tarjetas. Actualizalo al agregar o quitar certificados, y actualizá también el README.
 - Antes de publicar un comprobante, revisá el titular, el título y la fecha. No confundas la fecha de emisión con el año de la edición del curso (por ejemplo, OWASP Top 10 2021).
-- Los enlaces apuntan a PDF individuales en Google Drive, accesibles sin iniciar sesión. Las páginas de Udemy devuelven HTTP 403 a los comprobadores automáticos: no las uses como enlace principal.
+- Priorizar el comprobante original del emisor si se verifica en navegador sin iniciar sesión; usar el PDF público de Drive cuando el original no permita verlo o no esté aportado en las fuentes. El titular pidió expresamente esta preferencia el 17/09/2026. Un 403 automático no basta para descartar el original.
+- Verificaciones del 17–18/09/2026: seis originales Udemy, cinco PDF NEORIS de Drive y un registro SCRUMstudy con acceso adicional al diploma original. La carpeta completa conserva respaldos; los nombres accesibles indican el destino real.
+- Cada tarjeta agrupa enlaces en `.certificate-actions`. Scrum tiene dos: Verificar credencial al registro oficial y Ver diploma PDF al comprobante original aportado. `.credential-validity` muestra Sin vencimiento según el registro 1039383, verificado el 18/09/2026. No inferir esa condición para otras credenciales.
 - No dupliques certificados. El diploma de metodología aparecía dos veces en la carpeta de origen y se muestra una sola vez.
 - El orden de las tarjetas es editorial, no cronológico.
 
@@ -113,6 +116,10 @@ Para un emisor nuevo, agregá su clase `issuer-*` en `styles.css`.
 - Concrete-Quality: aporte declarado por el titular, conversaciones de trabajo disponibles y código de CQAgent en la rama local `feature/chat-ai`, revisados el 16 de septiembre de 2026. Se describen implementación e integración, sin afirmar autoría original ni despliegue productivo completo.
 - Cada experiencia incluye contexto y contribuciones visibles sin JavaScript. La aplicación .NET 8 de NEORIS se identifica como ejemplo de actualización tecnológica.
 - Proyectos: sus repositorios públicos, consultados el 16 de septiembre de 2026.
-- Certificados: la carpeta pública de Google Drive enlazada desde el CV ampliado.
+- Certificados: enlaces de Udemy y carpeta pública de Google Drive del CV ampliado, verificados en navegador el 17/09/2026. Para Scrum se suman el registro SCRUMstudy y el PDF original aportados y verificados el 18/09/2026. Los títulos y fechas históricos conservan los del diploma; una página de curso puede haber cambiado su nombre desde la emisión.
 
 Cuando cambie una fuente, dejá registrada la fecha de consulta en el `README.md`.
+
+## 9. Identidad para buscadores
+
+`body` identifica la página como `ProfilePage` y `main#contenido` contiene la persona principal (`Person`). El nombre, puesto y descripción se toman del texto visible de presentación; `sameAs` identifica el perfil de GitHub del contacto. No se añaden identificadores privados ni habilidades que no estén respaldadas. Ver [guía de posicionamiento](seo.md).

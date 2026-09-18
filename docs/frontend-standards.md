@@ -21,6 +21,8 @@ index.html                    # Todo el contenido del sitio
 styles.css                    # Estilos, responsive, impresión y movimiento reducido
 script.js                     # Mejoras progresivas (filtros y sección activa)
 favicon.svg                   # Identidad del sitio
+robots.txt                    # Rastreo y ubicación del sitemap
+sitemap.xml                   # Única URL canónica del portafolio
 downloads/Adrian-Toso-CV.pdf  # CV profesional sin datos sensibles
 .nojekyll                     # Solo aplica a la publicación desde rama (legado)
 scripts/package-site.mjs      # Arma _site/ con los archivos publicables
@@ -62,16 +64,12 @@ Solo se publican los archivos listados uno por uno en `SITE_FILES` (`scripts/pac
 - **Áreas táctiles**:
   - **Mínimo AA** (WCAG 2.2, criterio 2.5.8): 24×24 px.
     - La excepción es un control más chico cuyo círculo de 24 px, centrado en él, no toque otro control ni el círculo de otro control chico (excepción de espaciado). En la práctica, los centros de dos controles chicos tienen que quedar a 24 px o más.
-    - Hoy cumplen solo por esa excepción algunos enlaces de texto de unos 19 a 21 px de alto: la navegación en anchos mayores a 620 px, "Ver certificados" del inicio, y "Ver GitHub" y "Ver carpeta completa" en anchos mayores a 620 px. No reduzcas su separación.
+    - Hoy cumplen solo por esa excepción los enlaces "Ver GitHub" y "Ver carpeta completa" en anchos mayores a 620 px, de unos 19 a 21 px de alto. No reduzcas su separación.
   - **Objetivo del proyecto**: 44 px de alto en mobile (`min-height`) para los controles nuevos. Controles actuales que no llegan (medidas aproximadas entre 320 y 390 px), pendientes de mejorar:
-    - Botones de filtro de certificados: 42 px (`min-height:42px`).
-    - Enlace "Abrir PDF" del CV: 35 px (`min-height:35px`).
-    - Enlaces de la navegación en 620 px o menos: unos 32 px.
-    - Resumen "Qué podés encontrar" de los proyectos: unos 31 px, en todos los anchos.
-    - Enlace "GitHub / AdrianToso" del contacto: unos 42 px.
-    - Botones "Explorar proyectos" y "Descargar CV" del inicio en 620 px o menos: unos 43,6 px.
     - Marca del encabezado en 620 px o menos: unos 24 px. Marca del pie: unos 32 px.
-    - Enlace "Ver certificados" del inicio: unos 19 a 21 px.
+    - Enlaces "Ver GitHub" y "Ver carpeta completa" en anchos mayores a 620 px: unos 19 a 21 px.
+  - Rediseño del 18/09/2026: declaran `min-height:44px` la navegación (`nav a`), el resumen de proyectos (`.project-details summary`), "Abrir PDF" (`.cv-actions .text-link`), "Ver certificados" (`.hero-resources .text-link`) y "GitHub / AdrianToso" (`.github-contact`). Los botones del inicio (`.button`) llegan a 48 px. Alturas tomadas de las reglas CSS, pendientes de confirmar en el navegador.
+  - Certificados verificados el 18/09/2026: filtros de 44 px y enlaces de 52 px o más en 390, 360 y 320 px. Tarjetas con radio de 12 px, fondo --white y pie `.certificate-actions` común; Scrum tiene dos enlaces apilados.
   - Esta lista puede quedar desactualizada: al tocar un control, medí su alto en 390, 360 y 320 px.
 
 ## 5. JavaScript
